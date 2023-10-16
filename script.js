@@ -25,27 +25,29 @@ let firstNum;
 let secondNum;
 let operator;
 
-function add(firstNum, secondNum) {
-    return firstNum + secondNum;
+
+function add(num1, num2) {
+    return num1 + num2;
 }
 
-
-
-function subtract(firstNum, secondNum) {
-    return firstNum - secondNum;
+function subtract(num1, num2) {
+    return num1 - num2;
 }
 
-function multiply(firstNum, secondNum) {
-    return firstNum * secondNum;
+function multiply(num1, num2) {
+    return num1 * num2;
 }
 
-function divide(firstNum, secondNum) {
-
-    if (secondNum == 0) {
-        return "Cannot divide by zero"
+function divide(num1, num2) {
+    if (num2 == 0) {
+        return "Cannot divide by zero";
     }
-    return firstNum / secondNum;
+    return num1 / num2;
 }
+
+
+
+
 
 
 // Function to perform the operation based on the operator
@@ -73,8 +75,9 @@ let displayValue = '';
 
 function updateDisplay(newValue) {
     displayValue += newValue;
-    output.textContent = displayValue;
-    console.log(displayValue)
+    output.textContent = displayValue
+   
+    
 }
 
 nine.addEventListener('click', function(){
@@ -124,32 +127,58 @@ zero.addEventListener('click', function(){
 })
 
 
-plus.addEventListener('click', function(){
-    operator = '+'
-    updateDisplay(operator);
+
+plus.addEventListener('click', function() {
+    if (displayValue !== '') {
+        calculateValue();
+        firstNum = parseFloat(output.textContent); 
+        operator = '+';
+        displayValue = ''; 
+    }
+
+    
 })
 
+
 quotient.addEventListener('click', function(){
-    operator = '/'
-    updateDisplay(operator);
+    if (displayValue !== '') {
+        calculateValue();
+        firstNum = parseFloat(output.textContent); 
+        operator = '/';
+        displayValue = ''; 
+    }
+    
 })
 
 
 minus.addEventListener('click', function(){
-    operator = '-'
-    updateDisplay(operator);
+    if (displayValue !== '') {
+        calculateValue();
+        firstNum = parseFloat(output.textContent); 
+        operator = '-';
+        displayValue = ''; 
+    }
+   
 
 })
 
 product.addEventListener('click', function(){
-    operator = '*'
-    updateDisplay(operator);
+    if (displayValue !== '') {
+        calculateValue();
+        firstNum = parseFloat(output.textContent); 
+        operator = '*';
+        displayValue = ''; 
+    }
+   
 })
 
 
 clear.addEventListener('click', function() {
     displayValue = '';
-    output.innerText = '';
+    output.innerText = '0';
+    firstNum = undefined;
+    secondNum = undefined;
+    operator = undefined;
 
 })
 
@@ -162,20 +191,22 @@ del.addEventListener('click', function() {
     }
 })
 
+function calculateValue(){
+   if(firstNum !== undefined && operator !== undefined && displayValue !== '') {
+        secondNum = parseFloat(displayValue);
+        const result = operate(operator, firstNum, secondNum);
+        output.textContent = result;
+        firstNum = result;
+        displayValue = '';
+   }
+}
+
 equal.addEventListener('click', function(){
-   
-  let expression = displayValue.split(operator);
-  console.log(expression);
-
-  firstNum = parseFloat(expression[0]);
-  secondNum = parseFloat(expression[1]);
-
-  let result = operate(operator, firstNum, secondNum);
-  output.textContent = result;
-
-  displayValue = '';
-
-    
+    calculateValue();
+    displayValue = firstNum.tostring();
+    output.textContent = displayValue;
+    firstNum = undefined;
+    operator = undefined;
 })
 
 
