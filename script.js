@@ -46,12 +46,6 @@ function divide(num1, num2) {
 }
 
 
-
-
-
-
-// Function to perform the operation based on the operator
-
 function operate(operator,firstNum, secondNum) {
     switch (operator) {
         case '+':
@@ -71,9 +65,15 @@ function operate(operator,firstNum, secondNum) {
 
 
 let displayValue = '';
+let decimalEntered = false;
 
 
 function updateDisplay(newValue) {
+
+    if (newValue === '.') {
+        decimalEntered = true; 
+    }
+
     displayValue += newValue;
     output.textContent = displayValue
    
@@ -126,6 +126,15 @@ zero.addEventListener('click', function(){
     updateDisplay('0');
 })
 
+decimal.addEventListener('click', function() {
+    if (!decimalEntered) {
+        if (displayValue === '' || !displayValue.includes('.')) {
+            updateDisplay('.');
+        }
+        decimalEntered = true;
+    }
+});
+
 
 
 plus.addEventListener('click', function() {
@@ -134,6 +143,7 @@ plus.addEventListener('click', function() {
         firstNum = parseFloat(output.textContent); 
         operator = '+';
         displayValue = ''; 
+        decimalEntered = false;
     }
 
     
@@ -146,6 +156,7 @@ quotient.addEventListener('click', function(){
         firstNum = parseFloat(output.textContent); 
         operator = '/';
         displayValue = ''; 
+        decimalEntered = false;
     }
     
 })
@@ -157,6 +168,7 @@ minus.addEventListener('click', function(){
         firstNum = parseFloat(output.textContent); 
         operator = '-';
         displayValue = ''; 
+        decimalEntered = false;
     }
    
 
@@ -168,6 +180,7 @@ product.addEventListener('click', function(){
         firstNum = parseFloat(output.textContent); 
         operator = '*';
         displayValue = ''; 
+        decimalEntered = false;
     }
    
 })
@@ -179,7 +192,7 @@ clear.addEventListener('click', function() {
     firstNum = undefined;
     secondNum = undefined;
     operator = undefined;
-
+    decimalEntered = false;
 })
 
 del.addEventListener('click', function() {
@@ -203,10 +216,11 @@ function calculateValue(){
 
 equal.addEventListener('click', function(){
     calculateValue();
-    displayValue = firstNum.tostring();
+    displayValue = firstNum.toString();
     output.textContent = displayValue;
     firstNum = undefined;
     operator = undefined;
+    decimalEntered = false;
 })
 
 
